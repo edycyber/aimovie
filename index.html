@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Movie Club</title>
+<title>AI Movie Recommender</title>
 <style>
 :root {
     --dark-bg: #1a1a1a;
@@ -172,17 +172,17 @@ iframe {
 
 <script>
 const aiMovieDatabase = {
-    "alien": {
+    "fiction": {
         title: "Alien",
         description: "Comprehensive documentary about artificial intelligence revolution",
         url: "https://www.youtube.com/embed/k5ahSzsMluI"
     },
-    "Harry_Potter_and_Volcano_Witch": {
+    "real movies": {
         title: "Harry Potter and Volcano Witch",
         description: "Documentary about the current state of AI",
         url: "https://www.youtube.com/embed/fGKAJrbiMJI"
     },
-    "Harry Potter and The Founding of Hogwarts": {
+    "scary": {
         title: "Harry Potter and The Founding of Hogwarts",
         description: "Exploring the future possibilities of artificial intelligence",
         url: "https://www.youtube.com/embed/xr1-ToY24Cg"
@@ -193,6 +193,7 @@ const aiMovieDatabase = {
         url: "https://www.youtube.com/embed/5dZ_lvDgevk"
     }
 };
+
 function findMovie(query) {
     query = query.toLowerCase();
     for (const key in aiMovieDatabase) {
