@@ -1,0 +1,259 @@
+<html><head><base href="." />
+<meta charset="utf-8" />
+<title>AI Movie Recommender</title>
+<style>
+:root {
+  --dark-bg: #1a1a1a;
+  --darker-bg: #0f0f0f;
+  --accent: #6c5ce7;
+  --text: #ffffff;
+  --text-secondary: #a0a0a0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--dark-bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 300px 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  height: 100vh;
+}
+
+.chat-column {
+  background-color: var(--darker-bg);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.message {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.user-message {
+  background-color: var(--accent);
+  align-self: flex-end;
+  margin-left: 20px;
+}
+
+.ai-message {
+  background-color: #2d2d2d;
+  align-self: flex-start;
+  margin-right: 20px;
+}
+
+.chat-logo {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.play-button {
+  background-color: var(--accent);
+  color: var(--text);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+}
+
+.video-container {
+  grid-column: 2 / span 2;
+  background-color: var(--darker-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  display: none;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  
+  .video-container {
+    grid-column: 1;
+  }
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <div class="chat-column">
+    <svg class="chat-logo" viewBox="0 0 200 100" width="200" height="100">
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#6c5ce7;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#a8a4e6;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect x="10" y="20" width="180" height="60" rx="10" fill="url(#gradient)"/>
+      <text x="100" y="57" fill="white" font-size="20" text-anchor="middle" font-family="Inter">AI Movie Chat</text>
+      <circle cx="40" cy="50" r="8" fill="white">
+        <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="160" cy="50" r="8" fill="white">
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message ai-message">What AI movie would you like to see today?</div>
+    </div>
+  </div>
+  <div class="video-container" id="videoContainer">
+    <iframe id="videoPlayer" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+// Simulated database of AI movies from the channel
+const aiMovieDatabase = {
+  'ai love story': 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  'ai thriller': 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  'ai horror': 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  'ai documentary': 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+};
+
+async function getAIMovieRecommendation(userRequest) {
+  try {
+    const response = await fetch('/api/ai_completion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: `Based on the user's request, find the most relevant AI movie category from the following options: ai love story, ai thriller, ai horror, ai documentary.
+        
+        <typescript-interface>
+        interface Response {
+          category: string;
+          title: string;
+        }
+        </typescript-interface>
+        
+        <example>
+        {
+          "category": "ai thriller",
+          "title": "The AI Conspiracy"
+        }
+        </example>`,
+        data: userRequest
+      })
+    });
+    
+    const data = await response.json();
+    return {
+      category: data.category,
+      title: data.title,
+      videoUrl: aiMovieDatabase[data.category]
+    };
+  } catch (error) {
+    console.error('Error:', error);
+    return null;
+  }
+}
+
+function addMessage(message, isUser = false) {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+  messageDiv.textContent = message;
+  document.getElementById('chatMessages').appendChild(messageDiv);
+}
+
+function createPlayButton(title, videoUrl) {
+  const button = document.createElement('button');
+  button.className = 'play-button';
+  button.textContent = `Play ${title}`;
+  button.onclick = () => {
+    document.getElementById('videoContainer').style.display = 'block';
+    document.getElementById('videoPlayer').src = videoUrl;
+  };
+  document.getElementById('chatMessages').appendChild(button);
+}
+
+// Initialize chat input
+const chatColumn = document.querySelector('.chat-column');
+const input = document.createElement('input');
+input.type = 'text';
+input.placeholder = 'Type your movie request...';
+input.style.cssText = `
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--text-secondary);
+  background: var(--darker-bg);
+  color: var(--text);
+  width: 100%;
+`;
+
+input.addEventListener('keypress', async (e) => {
+  if (e.key === 'Enter' && input.value.trim()) {
+    const userMessage = input.value.trim();
+    addMessage(userMessage, true);
+    input.value = '';
+
+    const recommendation = await getAIMovieRecommendation(userMessage);
+    if (recommendation) {
+      addMessage("Yes, I have it, enjoy it!");
+      createPlayButton(recommendation.title, recommendation.videoUrl);
+    } else {
+      addMessage("Sorry, I couldn't find a matching movie.");
+    }
+  }
+});
+
+chatColumn.appendChild(input);
+</script>
+</body></html>
+
+I've added an animated SVG logo at the top of the chat section that says "AI Movie Chat" with a gradient background and animated circles. The SVG is responsive and includes subtle animations to make the interface more dynamic and engaging. The logo features:
+
+1. A gradient background from purple to lighter purple
+2. Clean typography using the Inter font
+3. Animated dots on either side that pulse gently
+4. Rounded corners and modern design
+5. Responsive scaling to fit the chat column width
+
+The image is implemented as an inline SVG, which means:
+- No external image dependencies
+- Perfect scaling at any resolution
+- Ability to animate elements
+- Interactive possibilities
+- Smaller file size than traditional images
+
+Would you like me to adjust the design or add any other visual elements to the chat section?
