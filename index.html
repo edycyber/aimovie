@@ -1,4 +1,6 @@
-<html><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Movie Recommender</title>
@@ -54,7 +56,7 @@ body {
 
 .chat-logo {
     width: 150px;
-    height: 150px;
+    height: auto;
     margin: 0 auto 20px;
 }
 
@@ -150,14 +152,11 @@ iframe {
 <div class="container">
     <div class="chat-column">
         <div class="chat-header">
-            <svg class="chat-logo" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" fill="none" stroke="#7c3aed" stroke-width="2"/>
-                <path d="M30 50 L45 65 L70 35" stroke="#7c3aed" stroke-width="4" fill="none"/>
-            </svg>
+            <img class="chat-logo" src="sparrowlogo.png" alt="Chat Logo">
             <h1>AI Movie Club</h1>
         </div>
         <div class="chat-messages" id="chatMessages">
-            <div class="message bot">What ai-movie would you like to see today?</div>
+            <div class="message bot">What AI movie would you like to see today?</div>
         </div>
         <div class="chat-input">
             <input type="text" id="userInput" placeholder="Type your message...">
@@ -171,39 +170,44 @@ iframe {
     </div>
 </div>
 
-<script>
-const aiMovieDatabase = {
-    "Fiction": {
-        title: "Alien",
-        description: "Comprehensive documentary about artificial intelligence revolution",
-        url: "www.youtube.com/embed/k5ahSzsMluI"
-    },
-    "Real Movies": {
-        title: "Harry Potter and Volcano Witch",
-        description: "Documentary about the current state of AI",
-        url: "www.youtube.com/embed/fGKAJrbiMJI"
-    },
-    "Scary": {
-        title: "Harry Potter and The Founding of Hogwarts",
-        description: "Exploring the future possibilities of artificial intelligence",
-        url: "www.youtube.com/embed/xr1-ToY24Cg"
-    },
-    "Other": {
-        title: "Machine Learning Revolution",
-        description: "Deep dive into machine learning technologies",
-        url: "www.youtube.com/embed/5dZ_lvDgevk"
-    }
-};
-
-function findMovie(query) {
-    query = query.toLowerCase();
-    for (let key in aiMovieDatabase) {
-        if (query.includes(key)) {
-            return aiMovieDatabase[key];
+<script type="module">
+// Encapsulation for aiMovieDatabase
+const aiMovieDatabaseModule = (() => {
+    const aiMovieDatabase = {
+        "fiction": {
+            title: "Alien",
+            description: "Comprehensive documentary about artificial intelligence revolution",
+            url: "www.youtube.com/embed/k5ahSzsMluI"
+        },
+        "real movies": {
+            title: "Harry Potter and Volcano Witch",
+            description: "Documentary about the current state of AI",
+            url: "www.youtube.com/embed/fGKAJrbiMJI"
+        },
+        "scary": {
+            title: "Harry Potter and The Founding of Hogwarts",
+            description: "Exploring the future possibilities of artificial intelligence",
+            url: "www.youtube.com/embed/xr1-ToY24Cg"
+        },
+        "other": {
+            title: "Machine Learning Revolution",
+            description: "Deep dive into machine learning technologies",
+            url: "www.youtube.com/embed/5dZ_lvDgevk"
         }
+    };
+
+    function findMovie(query) {
+        query = query.toLowerCase();
+        for (const key in aiMovieDatabase) {
+            if (query.includes(key)) {
+                return aiMovieDatabase[key];
+            }
+        }
+        return null;
     }
-    return null;
-}
+
+    return { findMovie };
+})();
 
 let currentMovie = null;
 
@@ -216,16 +220,16 @@ function sendMessage() {
         addMessage(message, 'user');
         
         // Find movie
-        const movie = findMovie(message);
+        const movie = aiMovieDatabaseModule.findMovie(message);
         
         // Bot response
         setTimeout(() => {
             if (movie) {
                 currentMovie = movie;
-                addMessage("Yes, I have it, enjoy it!", 'bot');
+                addMessage(`Yes, I have it! Enjoy watching "${movie.title}"!`, 'bot');
                 addPlayButton(movie.title);
             } else {
-                addMessage("I'm sorry, I couldn't find a movie matching your request. Try asking for something about AI, artificial intelligence, or machine learning.", 'bot');
+                addMessage("I'm sorry, I couldn't find a movie matching your request. Try asking about AI, artificial intelligence, or machine learning.", 'bot');
             }
         }, 500);
         
