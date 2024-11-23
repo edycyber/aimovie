@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Movie Recommender</title>
+<title>AI Movie Club</title>
 <style>
 :root {
     --dark-bg: #1a1a1a;
@@ -171,28 +171,7 @@ iframe {
 </div>
 
 <script>
-const aiMovieDatabase = {
-    "fiction": {
-        title: "Alien",
-        description: "Comprehensive documentary about artificial intelligence revolution",
-        url: "https://www.youtube.com/embed/k5ahSzsMluI"
-    },
-    "Harry Potter and Volcano Witch": {
-        title: "Harry Potter and Volcano Witch",
-        description: "Documentary about the current state of AI",
-        url: "https://www.youtube.com/embed/fGKAJrbiMJI"
-    },
-    "Harry Potter and The Founding of Hogwarts": {
-        title: "Harry Potter and The Founding of Hogwarts",
-        description: "Exploring the future possibilities of artificial intelligence",
-        url: "https://www.youtube.com/embed/xr1-ToY24Cg"
-    },
-    "other": {
-        title: "Machine Learning Revolution",
-        description: "Deep dive into machine learning technologies",
-        url: "https://www.youtube.com/embed/5dZ_lvDgevk"
-    }
-};
+import aiMovieDatabase from './movieDatabase.js';
 
 function findMovie(query) {
     query = query.toLowerCase();
