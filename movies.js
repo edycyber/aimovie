@@ -15,9 +15,9 @@ const aiMovieDatabase = [
         url: "https://www.youtube.com/embed/xr1-ToY24Cg"
     },
     {
-        title: "Machine Learning Revolution",
+        title: "AI Computer",
         description: "Deep dive into machine learning technologies",
-        url: "https://www.youtube.com/embed/5dZ_lvDgevk"
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Only%20AI%20Computer.mp4?t=2024-11-26T12%3A54%3A28.621Z"
     },
     {
         title: "WarGames",
