@@ -2,17 +2,17 @@ const aiMovieDatabase = [
     {
         title: "Alien",
         description: "Comprehensive documentary about artificial intelligence revolution",
-        url: "https://www.youtube.com/embed/k5ahSzsMluI"
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Only%20AI%20Computer.mp4?t=2024-11-26T12%3A54%3A28.621Z"
     },
     {
         title: "Harry Potter and the Volcano Witch",
         description: "Documentary about the current state of AI",
-        url: "https://www.youtube.com/embed/fGKAJrbiMJI"
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Only%20AI%20Computer.mp4?t=2024-11-26T12%3A54%3A28.621Z"
     },
     {
         title: "Harry Potter and The Founding of Hogwarts",
         description: "Exploring the future possibilities of artificial intelligence",
-        url: "https://www.youtube.com/embed/xr1-ToY24Cg"
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Only%20AI%20Computer.mp4?t=2024-11-26T12%3A54%3A28.621Z"
     },
     {
         title: "AI Computer",
@@ -22,22 +22,22 @@ const aiMovieDatabase = [
     {
         title: "WarGames",
         description: "Classic film about a hacker who almost starts a nuclear war.",
-        url: "https://www.youtube.com/embed/u59-Z6g-W7c" 
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Only%20AI%20Computer.mp4?t=2024-11-26T12%3A54%3A28.621Z" 
     },
     {
         title: "Her",
         description: "A man develops a relationship with an AI operating system.",
-        url: "https://www.youtube.com/embed/Mj-y00m78-k" 
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Only%20AI%20Computer.mp4?t=2024-11-26T12%3A54%3A28.621Z" 
     },
     {
         title: "Ex Machina",
         description: "A programmer is selected to participate in a Turing test with a highly advanced humanoid AI.",
-        url: "https://www.youtube.com/embed/lB64C-wW_4c" 
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Only%20AI%20Computer.mp4?t=2024-11-26T12%3A54%3A28.621Z" 
     },
     {
         title: "2001: A Space Odyssey",
         description: "A groundbreaking science fiction film exploring themes of artificial intelligence and human evolution.",
-        url: "https://www.youtube.com/embed/mG-gL85g7xE" 
+        url: "https://pwklwggrlszvorvgonca.supabase.co/storage/v1/object/public/movies/Only%20AI%20Computer.mp4?t=2024-11-26T12%3A54%3A28.621Z" 
     }
     // Add more movies here...
 ];
