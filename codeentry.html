@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code and Email Entry</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+    <style>
+        body {
+            background-image: url('thanks1.png');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+        .container img {
+            max-width: 150px; /* Adjust the size as needed */
+            margin-right: 20px; /* Space between image and form */
+            border-radius: 10px;
+        }
+        .form-container {
+            text-align: center;
+        }
+        input[type="text"], input[type="email"] {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="sparrowlogo.png" alt="Your Logo">
+        <div class="form-container">
+            <h2>Welcome to Sparrow AI</h2>
+            <input type="email" id="emailInput" placeholder="Enter your email" required>
+            <br>
+            <input type="text" id="codeInput" placeholder="Enter redeemcode here" required>
+            <br>
+            <button onclick="validate()">Submit</button>
+        </div>
+    </div>
+
+    <script src="validate.js"></script>
+
+</body>
+</html>
