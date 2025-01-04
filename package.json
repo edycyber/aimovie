@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "html-minifier": "^4.0.0"
+  },
+  "scripts": {
+  "minify-html": "html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --minify-js true --minify-css true index.html -o dist/index.html"
+  }
+}
+

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparrow AI</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --primary-color: #3498db;
+            --secondary-color: #03dac6;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 2rem;
+        }
+
+        .sign-out {
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sign-out:hover {
+            background-color: #02b39b;
+        }
+      .content {
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: #252525;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .card-description {
+            color: #ccc;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .card-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .card-button:hover {
+            background: #0056b3;
+        }
+      </style>
+</head>
+<body>
+   <header>
+        <nav>
+            <ul>
+                <li class="logo">Sparrow AI</li>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+            <button class="sign-out" onclick="signOut()">Sign Out</button>
+        </nav>
+    </header>
+    <div class="content">
+        <div class="card">
+            <img src="texter.png" alt="Texter Image">
+            <div class="card-content">
+                <h2 class="card-title">AI Movie Browser</h2>
+                <p class="card-description">
+                    Search for the best AI movie on the web.
+                </p>
+                <a href="aimovie.html" class="card-button">Open</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="codex.png" alt="Codex Image">
+            <div class="card-content">
+                <h2 class="card-title">AI Movie Originals</h2>
+                <p class="card-description">
+                    Create your own AI Movies with a single prompt.
+                </p>
+                <a href="createmovies.html" class="card-button">Open</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="AICOMPUTER.png" alt="Codex Image">
+            <div class="card-content">
+                <h2 class="card-title">AI Movie Metaverse</h2>
+                <p class="card-description">
+                    Watch your AI Movie in the metaverse
+                </p>
+                <a href="metaverse.html" class="card-button">Open</a>
+            </div>
+        </div>
+
+       
+
+        
+    </div>
+  <script>
+        function signOut() {
+            window.location.href = 'index.html';
+        }
+  </script>
+</body>
+</html>

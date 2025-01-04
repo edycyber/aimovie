@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Movie Club</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+<style>
+:root {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --primary-color: #3498db;
+    --secondary-color: #03dac6;
+    --dark-bg: #1e1e1e;
+    --text: #ffffff;
+    --darker-bg: #161616;
+    --accent: #03dac6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav a:hover {
+    background-color: var(--primary-color);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-right: 2rem;
+}
+
+.sign-out {
+    background-color: var(--secondary-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sign-out:hover {
+    background-color: #02b39b;
+}
+  
+  .title {
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 2.5em;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    z-index: 1000;
+    text-align: center;
+    animation: glow 2s infinite alternate;
+  }
+
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+    to {
+      text-shadow: 0 0 20px rgba(255,255,255,0.8),
+                   0 0 30px rgba(255,255,255,0.3);
+    }
+  }
+
+  .stage {
+    perspective: 1000px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .scene {
+    transform-style: preserve-3d;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  
+  .screen-container {
+    transform-style: preserve-3d;
+    transform: translateZ(0px);
+    width: 90vw;
+    max-width: 800px;
+  }
+  
+  .screen {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: 20px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(255,255,255,0.1);
+  }
+
+  .screen iframe {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .spotlights {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .spotlight {
+    position: absolute;
+    width: 20px;
+    height: 100px;
+    background: #444;
+    transform-style: preserve-3d;
+  }
+  
+  .light-beam {
+    position: absolute;
+    width: 100px;
+    height: 200px;
+    background: radial-gradient(ellipse at top, rgba(255,255,255,0.2), transparent 70%);
+    transform-origin: top;
+    animation: flicker 2s infinite alternate;
+  }
+
+  .laser {
+    position: absolute;
+    width: 2px;
+    height: 100vh;
+    background: linear-gradient(to bottom, 
+      rgba(255,0,0,0.5), 
+      rgba(255,0,0,0) 80%);
+    animation: laserMove 4s infinite alternate;
+  }
+
+  .crowd {
+    position: absolute;
+    bottom: -50vh;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    transform: rotateX(60deg);
+    transform-style: preserve-3d;
+  }
+
+  .crowd-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    animation: crowdWave 2s infinite alternate;
+  }
+
+  .side-light {
+    position: absolute;
+    width: 10px;
+    height: 200px;
+    background: #333;
+    transform-style: preserve-3d;
+  }
+
+  .side-light-beam {
+    position: absolute;
+    width: 50px;
+    height: 300px;
+    background: radial-gradient(ellipse at top, rgba(255,255,0,0.2), transparent 70%);
+    transform-origin: top;
+    animation: flicker 3s infinite alternate;
+  }
+  
+  @keyframes rotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+  }
+  
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes laserMove {
+    0% { transform: rotateZ(-45deg) translateX(-100%); }
+    100% { transform: rotateZ(45deg) translateX(100%); }
+  }
+
+  @keyframes crowdWave {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+  }
+  
+  .controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    padding: 20px;
+    border-radius: 10px;
+    width: auto;
+    max-width: none;
+  }
+  
+  .video-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .view-controls {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+  }
+
+  .zoom-controls {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .zoom-slider {
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
+    width: 8px;
+    height: 150px;
+    background: #444;
+  }
+
+  .zoom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #666;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .zoom-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #666;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .screen-container {
+      width: 95vw;
+    }
+    
+    .screen {
+      border-width: 20px;
+    }
+    
+    .controls {
+      padding: 10px;
+    }
+
+    .title {
+      font-size: 1.8em;
+    }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+        <ul>
+            <li class="logo">Sparrow AI</li>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="aboutus.html">About Us</a></li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="select.html">Back</a></li>
+        </ul>
+        <button class="sign-out" onclick="window.location.href='index.html'">Sign Out</button>
+    </nav>
+</header>
+<div>
+<h1 class="title">Welcome to AI Movie Metaverse</h1>
+
+<div class="stage">
+  <div class="scene">
+    <div class="screen-container">
+      <div class="screen">
+        <iframe src="https://www.youtube.com/embed/aUOvukJdnF8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="spotlights">
+      <div class="spotlight" style="left: -200px; transform: translateZ(100px)">
+        <div class="light-beam"></div>
+      </div>
+      <div class="spotlight" style="right: -200px; transform: translateZ(100px)">
+        <div class="light-beam"></div>
+      </div>
+    </div>
+    <div class="side-light" style="left: -300px; top: -100px; transform: translateZ(0px)">
+      <div class="side-light-beam"></div>
+    </div>
+    <div class="side-light" style="right: -300px; top: -100px; transform: translateZ(0px)">
+      <div class="side-light-beam"></div>
+    </div>
+    <div class="laser" style="left: 25%"></div>
+    <div class="laser" style="left: 75%"></div>
+    <div class="crowd" id="crowd"></div>
+  </div>
+</div>
+
+<div class="zoom-controls">
+  <button onclick="resetZoom()">Reset Zoom</button>
+  <input type="range" class="zoom-slider" min="500" max="2000" value="1000" orient="vertical" 
+         oninput="updateZoom(this.value)">
+</div>
+
+<div class="view-controls">
+  <button onclick="toggleAutoRotate()">Toggle Auto-Rotate</button>
+  <button onclick="resetView()">Reset View</button>
+</div>
+
+<div class="controls">
+  <div class="video-buttons">
+    <button onclick="playVideo('ZtxAD01inyo')">Dragons</button>
+    <button onclick="playVideo('hgiTjO_OO_w')">UFC</button>
+    <button onclick="playVideo('a6eP5vdRkq8')">Space Force</button>
+  </div>
+</div>
+</div>
+<script>
+let autoRotate = false;
+let rotationAngle = 0;
+let movieDatabase = []; // Will be populated from movies.js
+
+// Wait for movies.js to load
+window.onload = function() {
+  if (typeof movies !== 'undefined') {
+    movieDatabase = movies;
+  }
+}
+
+function playVideo(videoId) {
+  const iframe = document.querySelector('iframe');
+  iframe.src = `https://www.youtube.com/embed/${videoId}`;
+}
+
+function resetView() {
+  const scene = document.querySelector('.scene');
+  scene.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  autoRotate = false;
+}
+
+function toggleAutoRotate() {
+  autoRotate = !autoRotate;
+  if (autoRotate) {
+    rotateScene();
+  }
+}
+
+function rotateScene() {
+  if (!autoRotate) return;
+  
+  const scene = document.querySelector('.scene');
+  rotationAngle += 0.5;
+  scene.style.transform = `rotateY(${rotationAngle}deg)`;
+  requestAnimationFrame(rotateScene);
+}
+
+// Add crowd dots
+const crowd = document.getElementById('crowd');
+for (let i = 0; i < 200; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'crowd-dot';
+  dot.style.left = Math.random() * 100 + '%';
+  dot.style.top = Math.random() * 100 + '%';
+  dot.style.animationDelay = Math.random() * 2 + 's';
+  crowd.appendChild(dot);
+}
+
+// Add zoom control
+function updateZoom(value) {
+  const stage = document.querySelector('.stage');
+  stage.style.perspective = `${value}px`;
+}
+
+function resetZoom() {
+  const stage = document.querySelector('.stage');
+  stage.style.perspective = '1000px';
+  document.querySelector('.zoom-slider').value = 1000;
+}
+
+// Update mouse control to include depth movement
+let isDragging = false;
+let previousMousePosition = { x: 0, y: 0 };
+let currentZPosition = 0;
+
+document.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging || autoRotate) return;
+  
+  const scene = document.querySelector('.scene');
+  const deltaX = e.clientX - previousMousePosition.x;
+  const deltaY = e.clientY - previousMousePosition.y;
+  
+  rotationAngle += deltaX * 0.5;
+  const xRotation = Math.max(-30, Math.min(30, deltaY * 0.5));
+  
+  scene.style.transform = `rotateY(${rotationAngle}deg) rotateX(${xRotation}deg) translateZ(${currentZPosition}px)`;
+  
+  previousMousePosition = { x: e.clientX, y: e.clientY };
+});
+
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+});
+
+// Add mouse wheel control for depth
+document.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const scene = document.querySelector('.scene');
+  currentZPosition = Math.max(-500, Math.min(500, currentZPosition - e.deltaY));
+  
+  scene.style.transform = `rotateY(${rotationAngle}deg) translateZ(${currentZPosition}px)`;
+}, { passive: false });
+
+// Enhance motion controls for stage movement
+window.addEventListener('devicemotion', (e) => {
+  if (autoRotate) return;
+  
+  const scene = document.querySelector('.scene');
+  const accelerationX = e.accelerationIncludingGravity.x;
+  const accelerationY = e.accelerationIncludingGravity.y;
+  const accelerationZ = e.accelerationIncludingGravity.z;
+  
+  // Convert acceleration to rotation angles
+  const rotationX = Math.max(-30, Math.min(30, accelerationY * 2));
+  const rotationY = Math.max(-30, Math.min(30, accelerationX * 2));
+  
+  // Update Z position based on forward/backward tilt
+  currentZPosition = Math.max(-500, Math.min(500, currentZPosition + accelerationZ));
+  
+  scene.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateZ(${currentZPosition}px)`;
+});
+
+// Add touch controls for mobile devices
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartDistance = 0;
+
+document.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 1) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  } else if (e.touches.length === 2) {
+    // Calculate initial distance between two fingers for pinch zoom
+    touchStartDistance = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+  }
+});
+
+document.addEventListener('touchmove', (e) => {
+  if (autoRotate) return;
+  
+  if (e.touches.length === 1) {
+    const deltaX = e.touches[0].clientX - touchStartX;
+    const deltaY = e.touches[0].clientY - touchStartY;
+    
+    rotationAngle += deltaX * 0.5;
+    const xRotation = Math.max(-30, Math.min(30, deltaY * 0.5));
+    
+    const scene = document.querySelector('.scene');
+    scene.style.transform = `rotateY(${rotationAngle}deg) rotateX(${xRotation}deg) translateZ(${currentZPosition}px)`;
+    
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  } else if (e.touches.length === 2) {
+    // Handle pinch zoom
+    const currentDistance = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    
+    const deltaDistance = currentDistance - touchStartDistance;
+    currentZPosition = Math.max(-500, Math.min(500, currentZPosition + deltaDistance * 0.5));
+    
+    const scene = document.querySelector('.scene');
+    scene.style.transform = `rotateY(${rotationAngle}deg) translateZ(${currentZPosition}px)`;
+    
+    touchStartDistance = currentDistance;
+  }
+  
+  e.preventDefault();
+}, { passive: false });
+
+</script>
+
+</body></html>
